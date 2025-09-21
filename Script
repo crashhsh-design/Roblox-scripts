@@ -1,0 +1,70 @@
+-- Cliente: simulación de desync con sliders de control
+local enemy = workspace:WaitForChild("Enemy")
+
+-- Crear clon del enemigo
+local fakeEnemy = enemy:Clone()
+fakeEnemy.Name = "FakeEnemy"
+fakeEnemy.BrickColor = BrickColor.new("Bright red")
+fakeEnemy.Parent = workspace
+
+-- Variables de control
+local desyncEnabled = false
+local lagChance = 0.2
+local lagDuration = 2
+local lagging = false
+local lagEndTime = 0
+
+-- Crear UI
+local player = game.Players.LocalPlayer
+local ScreenGui = Instance.new("ScreenGui", player:WaitForChild("PlayerGui"))
+
+-- Botón de encendido
+local ToggleButton = Instance.new("TextButton", ScreenGui)
+ToggleButton.Size = UDim2.new(0, 200, 0, 50)
+ToggleButton.Position = UDim2.new(0.5, -100, 0.8, 0)
+ToggleButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+ToggleButton.Text = "Desync: OFF"
+ToggleButton.TextScaled = true
+
+-- Slider de probabilidad
+local ChanceLabel = Instance.new("TextLabel", ScreenGui)
+ChanceLabel.Size = UDim2.new(0, 200, 0, 30)
+ChanceLabel.Position = UDim2.new(0.5, -100, 0.65, 0)
+ChanceLabel.BackgroundTransparency = 1
+ChanceLabel.TextScaled = true
+ChanceLabel.Text = "LagChance: " .. tostring(lagChance)
+
+local ChanceSlider = Instance.new("TextButton", ScreenGui)
+ChanceSlider.Size = UDim2.new(0, 200, 0, 20)
+ChanceSlider.Position = UDim2.new(0.5, -100, 0.7, 0)
+ChanceSlider.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+ChanceSlider.Text = ""
+
+local ChanceKnob = Instance.new("Frame", ChanceSlider)
+ChanceKnob.Size = UDim2.new(0, 20, 1, 0)
+ChanceKnob.BackgroundColor3 = Color3.fromRGB(255, 100, 100)
+
+-- Slider de duración
+local DurationLabel = Instance.new("TextLabel", ScreenGui)
+DurationLabel.Size = UDim2.new(0, 200, 0, 30)
+DurationLabel.Position = UDim2.new(0.5, -100, 0.55, 0)
+DurationLabel.BackgroundTransparency = 1
+DurationLabel.TextScaled = true
+DurationLabel.Text = "LagDuration: " .. tostring(lagDuration)
+
+local DurationSlider = Instance.new("TextButton", ScreenGui)
+DurationSlider.Size = UDim2.new(0, 200, 0, 20)
+DurationSlider.Position = UDim2.new(0.5, -100, 0.6, 0)
+DurationSlider.BackgroundColor3 = Color3.fromRGB(180, 180, 180)
+DurationSlider.Text = ""
+
+local DurationKnob = Instance.new("Frame", DurationSlider)
+DurationKnob.Size = UDim2.new(0, 20, 1, 0)
+DurationKnob.BackgroundColor3 = Color3.fromRGB(100, 255, 100)
+
+-- Aviso de que el script cargó bien
+game.StarterGui:SetCore("SendNotification", {
+    Title = "Desync System",
+    Text = "✅ Script cargado correctamente",
+    Duration = 5
+})
